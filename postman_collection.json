@@ -1,0 +1,79 @@
+{
+  "info": {
+    "_postman_id": "github-profile-analyzer-collection",
+    "name": "GitHub Profile Analyzer API",
+    "description": "A complete collection to test all endpoints of the GitHub Profile Analyzer REST API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string",
+      "description": "Base URL of the API. Change this to your deployed URL when testing in production."
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        },
+        "description": "Verify the server is running. Returns a success flag and the current server timestamp."
+      },
+      "response": []
+    },
+    {
+      "name": "Analyze & Store Profile",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/profile/torvalds",
+          "host": ["{{base_url}}"],
+          "path": ["api", "profile", "torvalds"]
+        },
+        "description": "Calls the GitHub API for the given username, calculates insights, and stores the result in MySQL. If the username already exists in the DB, it updates the existing record.\n\nChange 'torvalds' in the URL to any valid GitHub username."
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Stored Profiles",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/profiles",
+          "host": ["{{base_url}}"],
+          "path": ["api", "profiles"]
+        },
+        "description": "Returns all profiles that have been analyzed and stored in the MySQL database. Returns an empty array if no profiles exist yet."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Single Profile",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/profile/torvalds",
+          "host": ["{{base_url}}"],
+          "path": ["api", "profile", "torvalds"]
+        },
+        "description": "Fetches a single profile from the MySQL database by username. Does NOT call the GitHub API — only reads from the local DB. Returns 404 if the profile has not been analyzed yet."
+      },
+      "response": []
+    }
+  ]
+}
