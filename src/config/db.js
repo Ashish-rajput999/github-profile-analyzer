@@ -8,7 +8,8 @@ require('dotenv').config(); // Load environment variables from .env file
 
 // Create the connection pool using values from .env
 const pool = mysql.createPool({
-  host: process.env.DB_HOST,         // e.g. "localhost"
+  host: process.env.DB_HOST,         // e.g. "localhost" or Railway host
+  port: process.env.DB_PORT || 3306, // Railway uses a custom port; default 3306 locally
   user: process.env.DB_USER,         // e.g. "root"
   password: process.env.DB_PASSWORD, // your MySQL password
   database: process.env.DB_NAME,     // e.g. "github_analyzer"
